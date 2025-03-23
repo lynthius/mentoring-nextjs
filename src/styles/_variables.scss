@@ -1,0 +1,30 @@
+/* Global */
+$primary-color: black;
+$secondary-color: #2c3e50;
+$font-size-base: 1rem;
+$font-size-md: 1.5rem;
+$font-size-lg: 2rem;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 480px) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: 1280px) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: 1440px) {
+      @content;
+    }
+  }
+}

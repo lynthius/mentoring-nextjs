@@ -1,0 +1,13 @@
+query BlogPostGetOne($slug: String!) {
+  allBlogPost(where: { slug: { current: { eq: $slug } } }) {
+    category {
+      name
+    }
+    _id
+    slug {
+      current
+      source
+    }
+    blockContentRaw
+  }
+}

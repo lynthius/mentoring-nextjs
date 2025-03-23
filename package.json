@@ -6,19 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "graphql-codegen --config .graphqlrc.ts"
   },
   "dependencies": {
+    "@portabletext/react": "^3.2.1",
+    "@sanity/client": "^6.21.0",
+    "@sanity/image-url": "^1.0.2",
+    "@tailwindcss/vite": "^4.0.9",
+    "next": "^15.2.0",
+    "next-sanity": "^9.4.2",
+    "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.5"
+    "sass": "^1.85.1",
+    "slugify": "^1.6.6",
+    "tailwindcss": "^4.0.9"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@graphql-codegen/cli": "^5.0.2",
     "@types/node": "^20",
+    "@types/prismjs": "^1.26.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "eslint-config-next": "14.2.5",
+    "typescript": "^5"
   }
 }

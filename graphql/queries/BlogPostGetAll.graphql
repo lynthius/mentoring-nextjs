@@ -1,0 +1,12 @@
+query BlogPostsGetAll {
+  allBlogPost {
+    category {
+      name
+    }
+    slug {
+      current
+      source
+    }
+    blockContentRaw
+  }
+}
