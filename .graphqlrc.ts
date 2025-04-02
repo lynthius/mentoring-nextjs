@@ -9,12 +9,18 @@ const config: CodegenConfig = {
 	documents: "graphql/**/*.graphql",
 	ignoreNoDocuments: false,
 	generates: {
-		"src/gql/": {
+		"graphql/generated/": {
 			preset: "client",
 			presetConfig: {
 				fragmentMasking: false,
 			},
 			config: {
+				scalars: {
+					Date: {
+						input:'string',
+						output: 'string'
+					}
+				},
 				defaultScalarType: "unknown",
 				useTypeImports: true,
 				enumsAsTypes: true,

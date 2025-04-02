@@ -1,4 +1,4 @@
-import { BlogPostGetOneDocument, BlogPostsGetAllDocument } from "@/gql/graphql"
+import { BlogPostGetOneDocument, BlogPostsGetAllDocument } from "../../graphql/generated/graphql"
 import { executeGraphqlOnServer } from "../../graphql/graphqlClient"
 
 export const getBlogPostBySlug = async (slug: string) => {

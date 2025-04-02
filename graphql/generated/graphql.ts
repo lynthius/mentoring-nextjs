@@ -15,7 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: { input: unknown; output: unknown; }
+  Date: { input: string; output: string; }
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: unknown; output: unknown; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -115,6 +115,8 @@ export type Block = {
   listItem?: Maybe<Scalars['String']['output']>;
   style?: Maybe<Scalars['String']['output']>;
 };
+
+export type BlockOrCode = Block | Code;
 
 export type BlogPost = Document & {
   /** Date the document was created */
@@ -233,6 +235,31 @@ export type CategorySorting = {
   file?: InputMaybe<FileSorting>;
   name?: InputMaybe<SortOrder>;
   visibility?: InputMaybe<SortOrder>;
+};
+
+export type Code = {
+  _key?: Maybe<Scalars['String']['output']>;
+  _type?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  filename?: Maybe<Scalars['String']['output']>;
+  highlightedLines?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  language?: Maybe<Scalars['String']['output']>;
+};
+
+export type CodeFilter = {
+  _key?: InputMaybe<StringFilter>;
+  _type?: InputMaybe<StringFilter>;
+  code?: InputMaybe<StringFilter>;
+  filename?: InputMaybe<StringFilter>;
+  language?: InputMaybe<StringFilter>;
+};
+
+export type CodeSorting = {
+  _key?: InputMaybe<SortOrder>;
+  _type?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
+  filename?: InputMaybe<SortOrder>;
+  language?: InputMaybe<SortOrder>;
 };
 
 export type CrossDatasetReference = {
@@ -961,7 +988,14 @@ export type StringFilter = {
 export type BlogPostsGetAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BlogPostsGetAllQuery = { allBlogPost: Array<{ blockContentRaw?: unknown | null, category?: { name?: string | null } | null, slug?: { current?: string | null, source?: string | null } | null }> };
+export type BlogPostsGetAllQuery = { allBlogPost: Array<{ _id?: string | null, title?: string | null, publishDate?: string | null, blockContentRaw?: unknown | null, additionalCategories?: Array<{ name?: string | null } | null> | null, category?: { name?: string | null } | null, slug?: { current?: string | null, source?: string | null } | null }> };
+
+export type BlogPostsGetByCategoryQueryVariables = Exact<{
+  category: Scalars['String']['input'];
+}>;
+
+
+export type BlogPostsGetByCategoryQuery = { allBlogPost: Array<{ blockContentRaw?: unknown | null, category?: { name?: string | null } | null, slug?: { current?: string | null, source?: string | null } | null }> };
 
 export type BlogPostGetOneQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -969,6 +1003,11 @@ export type BlogPostGetOneQueryVariables = Exact<{
 
 
 export type BlogPostGetOneQuery = { allBlogPost: Array<{ _id?: string | null, blockContentRaw?: unknown | null, category?: { name?: string | null } | null, slug?: { current?: string | null, source?: string | null } | null }> };
+
+export type CategoryGetAllQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryGetAllQuery = { allCategory: Array<{ name?: string | null }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -988,6 +1027,12 @@ export class TypedDocumentString<TResult, TVariables>
 export const BlogPostsGetAllDocument = new TypedDocumentString(`
     query BlogPostsGetAll {
   allBlogPost {
+    _id
+    title
+    publishDate
+    additionalCategories {
+      name
+    }
     category {
       name
     }
@@ -999,6 +1044,20 @@ export const BlogPostsGetAllDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<BlogPostsGetAllQuery, BlogPostsGetAllQueryVariables>;
+export const BlogPostsGetByCategoryDocument = new TypedDocumentString(`
+    query BlogPostsGetByCategory($category: String!) {
+  allBlogPost(where: {category: {name: {eq: $category}}}) {
+    category {
+      name
+    }
+    slug {
+      current
+      source
+    }
+    blockContentRaw
+  }
+}
+    `) as unknown as TypedDocumentString<BlogPostsGetByCategoryQuery, BlogPostsGetByCategoryQueryVariables>;
 export const BlogPostGetOneDocument = new TypedDocumentString(`
     query BlogPostGetOne($slug: String!) {
   allBlogPost(where: {slug: {current: {eq: $slug}}}) {
@@ -1014,3 +1073,10 @@ export const BlogPostGetOneDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<BlogPostGetOneQuery, BlogPostGetOneQueryVariables>;
+export const CategoryGetAllDocument = new TypedDocumentString(`
+    query CategoryGetAll {
+  allCategory {
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<CategoryGetAllQuery, CategoryGetAllQueryVariables>;

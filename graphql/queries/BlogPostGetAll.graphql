@@ -1,5 +1,11 @@
 query BlogPostsGetAll {
   allBlogPost {
+    _id
+    title
+    publishDate
+    additionalCategories {
+      name
+    }
     category {
       name
     }

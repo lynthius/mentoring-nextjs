@@ -1,0 +1,18 @@
+query BlogPostsGetByCategory($category: String!) {
+  allBlogPost(where:  {
+     category:  {
+        name:  {
+           eq: $category
+        }
+     }
+  }) {
+    category {
+      name
+    }
+    slug {
+      current
+      source
+    }
+    blockContentRaw
+  }
+}

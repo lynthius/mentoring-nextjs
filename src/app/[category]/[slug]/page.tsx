@@ -43,9 +43,10 @@ import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-tsx";
 import "prismjs/themes/prism-okaidia.css"; // Changed to okaidia theme
+import { Button } from "@/components/ui/button";
 
-export default async function Page({ params }: { params: { slug: string; category: string } }) {
-  const { slug, category } = params;
+export default async function Page({ params }: { params: Promise<{ slug: string; category: string }> }) {
+  const { slug, category } =await params;
 
   const postData = await getBlogPostBySlug(slug);
 
@@ -58,9 +59,10 @@ export default async function Page({ params }: { params: { slug: string; categor
 
   return (
     <div>
-      <h1>
+      <h1 className="text-3xl font-bold underline">
         {post._id} - {slug}
       </h1>
+      <Button variant="outline">test</Button>
       <h3>{category_formatted}</h3>
       <p>Content:</p>
       <PortableText
